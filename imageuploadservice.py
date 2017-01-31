@@ -4,7 +4,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER=r'C:/' #文件要存在哪一个位置
+UPLOAD_FOLDER=r'/pictures/' #文件要存在哪一个位置
 ALLOWED_EXTENSIONS=set(['png','jpg','jpeg']) #可以选择的文件拓展名 
   
 def allowed_file(filename):  
