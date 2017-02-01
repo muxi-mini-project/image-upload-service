@@ -21,7 +21,14 @@ def upload_picture():
         	return url
 
 	else:
-		return 'Wrong'  
+		return '''
+			<!DOCTYPE html> 
+			<title> 415 Unsupported Media Type</title>
+			<h1>415 Unsupported Media Type</h1>
+			<body>对于当前请求的方法和所请求的资源，请求中提交的实体并不是服务器中所支持的格式，因此请求被拒绝。</body>
+		       '''  
+
+
     return ''' 
     <!DOCTYPE html> 
     <title>Upload Picture</title> 
@@ -30,11 +37,12 @@ def upload_picture():
         <br>
 		<input type = "file" name = file> 
 		<br>
+		<br>
         <input type = "submit" value = Upload> 
 	</form> 
     '''  
 
 if __name__ == '__main__':
-	app.run(debug=True,host='0.0.0.0', port=5001) #0.0.0.0为可在互联网上运行,端口为5001
+	app.run(debug=True)
+
 #主要学着 http://blog.csdn.net/bestallen/article/details/52888876 这篇博文做的
-		
