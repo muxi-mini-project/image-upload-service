@@ -35,7 +35,6 @@ def upload_picture():
     '''  
 
 if __name__ == '__main__':
-	app.run(debug=True)
-
+	app.run(debug=True,host='0.0.0.0', port=5001) #0.0.0.0为可在互联网上运行,端口为5001
 #主要学着 http://blog.csdn.net/bestallen/article/details/52888876 这篇博文做的
 		
