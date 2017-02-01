@@ -4,7 +4,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER=r'/pictures/' #文件要存在哪一个位置
+UPLOAD_FOLDER=r'/home/humbert/pictures' #文件要存在哪一个位置
 ALLOWED_EXTENSIONS=set(['png','jpg','jpeg']) #可以选择的文件拓展名 
   
 def allowed_file(filename):  
@@ -20,5 +20,22 @@ def upload_picture():
 		url = os.path.join(UPLOAD_FOLDER,file.filename) 
         	return url
 
-		#主要学着 http://blog.csdn.net/bestallen/article/details/52888876 这篇博文做的
-		#原文之中还有一个html文件，看起来更直观
+	else:
+		return 'Wrong'  
+    return ''' 
+    <!DOCTYPE html> 
+    <title>Upload Picture</title> 
+    <h1>Upload </h1> 
+    <form action = "" method = "post" enctype=multipart/form-data> 
+        <br>
+		<input type = "file" name = file> 
+		<br>
+        <input type = "submit" value = Upload> 
+	</form> 
+    '''  
+
+if __name__ == '__main__':
+	app.run(debug=True)
+
+#主要学着 http://blog.csdn.net/bestallen/article/details/52888876 这篇博文做的
+		
