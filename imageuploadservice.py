@@ -1,12 +1,13 @@
 #--coding:utf-8--
 import os  
-from flask import Flask, request 
+from flask import Flask, request, send_from_directory
+
+UPLOAD_FOLDER=r'/root/image-upload-service/' #文件要存在哪一个位置
+ALLOWED_EXTENSIONS=set(['png','jpg','jpeg']) #可以选择的文件拓展名 
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER']=UPLOAD_FOLDER
 
-UPLOAD_FOLDER=r'/home/humbert/pictures' #文件要存在哪一个位置
-ALLOWED_EXTENSIONS=set(['png','jpg','jpeg']) #可以选择的文件拓展名 
-  
 def allowed_file(filename):  
     return '.' in filename and filename.split('.',1)[1] in ALLOWED_EXTENSIONS #按 '.' 分割一次后的第二个字符，即文件拓展名
 																			   
@@ -27,8 +28,7 @@ def upload_picture():
 			<h1>415 Unsupported Media Type</h1>
 			<body>对于当前请求的方法和所请求的资源，请求中提交的实体并不是服务器中所支持的格式，因此请求被拒绝。</body>
 		       '''  
-
-
+	
     return ''' 
     <!DOCTYPE html> 
     <title>Upload Picture</title> 
@@ -41,6 +41,9 @@ def upload_picture():
         <input type = "submit" value = Upload> 
 	</form> 
     '''  
+@app.route('/root/image-upload-service/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],filename)
 
 if __name__ == '__main__':
 	app.run(debug=True,host='0.0.0.0', port=5000)
