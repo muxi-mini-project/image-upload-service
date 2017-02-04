@@ -45,6 +45,6 @@ threads = 2
 
 （4，5两步的细节以及一些关于nginx和uwsgi的介绍可以看 [Flask+uWSGI+Nginx+Ubuntu部署教程](http://www.linuxidc.com/Linux/2016-06/132690.htm))<br>
 6,此时就可以用 python XXX.py 的命令来运行了。但是，我们想让它即使在我们关闭命令行之后还是在运行，这时我们就需要 ``nohup``命令了。<br>
-  通过<br>``nohup python XXX.py & `` <br>
+  通过<br>``nohup uwsgi uwsgi.ini & `` <br>
   命令，我们就能让这个文件即使在我们退出了服务器的命令行之后仍然可以正常运行。
   
