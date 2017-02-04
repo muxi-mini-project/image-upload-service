@@ -13,7 +13,36 @@
   `` git clone https://github.com/muxi-mini-project/image-upload-service.git ``<br>
   这里注意在app.run 中的参数 ``app.run(debug=True,host='0.0.0.0', port=5001)`` host 和 port <br>
 4, 用Nginx处理Web服务<br>
+/etc/nginx/sites-enabled/defualt 文件
+```
+server{
+        listen 80;
+        server_name upload.muxixyz.com;
+        access_log /home/imageuploadservice/docs/access.log;
+        error_log /home/imageuploadservice/docs/error.log;
+        location /{
+                        include uwsgi_params;
+                        uwsgi_pass 127.0.0.1:8001 ;
+                        uwsgi_param UWSGI_CHDIR /home/imageuploadservice ;
+                        uwsgi_param UWSGI_SCRIPT imageuploadservice.py ;
+        }
+}
+```
 5, 启动配置uWSGI<br>
+uwsgi.ini文档
+```
+[uwsgi]
+socket = 127.0.0.1:8001
+chdir = /home/imageuploadservice/
+wsgi-file =imageuploadservice.py
+mudule = wsgi
+callable = app
+processes = 4
+threads = 2
+
+```
+
+
 （4，5两步的细节以及一些关于nginx和uwsgi的介绍可以看 [Flask+uWSGI+Nginx+Ubuntu部署教程](http://www.linuxidc.com/Linux/2016-06/132690.htm))<br>
 6,此时就可以用 python XXX.py 的命令来运行了。但是，我们想让它即使在我们关闭命令行之后还是在运行，这时我们就需要 ``nohup``命令了。<br>
   通过<br>``nohup python XXX.py & `` <br>
